@@ -57,8 +57,6 @@ inline hipblasStatus_t testing_gemm_batched_ex_template(const Arguments& arg)
     auto hipblasGemmBatchedExFn = FORTRAN ? hipblasGemmBatchedExFortran : hipblasGemmBatchedEx;
 
     hipblasGemmAlgo_t algo           = HIPBLAS_GEMM_DEFAULT;
-    uint32_t          solution_index = 0;
-    uint32_t          flags          = 0;
 
     hipblasOperation_t transA = char2hipblas_operation(arg.transA);
     hipblasOperation_t transB = char2hipblas_operation(arg.transB);

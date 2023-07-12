@@ -469,6 +469,16 @@ typedef enum
     HIPBLAS_ATOMICS_ALLOWED = 1 /**< Algorithms will take advantage of atomics where applicable. */
 } hipblasAtomicsMode_t;
 
+/*! \brief Control flags passed into gemm ex with flags algorithms */
+typedef enum
+{
+    HIPBLAS_GEMM_FLAGS_NONE = 0x0, /**< Default empty flags */
+    HIPBLAS_GEMM_FLAGS_USE_CU_EFFICIENCY = 0x2, /**< enumerator rocblas_gemm_flags_use_cu_efficiency */
+    HIPBLAS_GEMM_FLAGS_FP16_ALT_IMPL        = 0x4, /**< enumerator rocblas_gemm_flags_fp16_alt_impl */
+    HIPBLAS_GEMM_FLAGS_CHECK_SOLUTION_INDEX = 0x8, /**< enumerator rocblas_gemm_flags_check_solution_index */
+    HIPBLAS_GEMM_FLAGS_FP16_ALT_IMPL_RNZ    = 0x10 /**< enumerator rocblas_gemm_flags_fp16_alt_impl_rnz */
+} hipblasGemmFlags_t;
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -18375,6 +18385,28 @@ HIPBLAS_EXPORT hipblasStatus_t hipblasGemmEx(hipblasHandle_t    handle,
                                              hipblasDatatype_t  computeType,
                                              hipblasGemmAlgo_t  algo);
 
+HIPBLAS_EXPORT hipblasStatus_t hipblasGemmExWithFlags(hipblasHandle_t    handle,
+                                                    hipblasOperation_t transA,
+                                                    hipblasOperation_t transB,
+                                                    int                m,
+                                                    int                n,
+                                                    int                k,
+                                                    const void*        alpha,
+                                                    const void*        A,
+                                                    hipblasDatatype_t  aType,
+                                                    int                lda,
+                                                    const void*        B,
+                                                    hipblasDatatype_t  bType,
+                                                    int                ldb,
+                                                    const void*        beta,
+                                                    void*              C,
+                                                    hipblasDatatype_t  cType,
+                                                    int                ldc,
+                                                    hipblasDatatype_t  computeType,
+                                                    hipblasGemmAlgo_t  algo,
+                                                    int32_t            solution_index,
+                                                    hipblasGemmFlags_t flags);
+
 /*! \brief BLAS EX API
     \details
     gemmBatchedEx performs one of the batched matrix-matrix operations
@@ -18476,6 +18508,29 @@ HIPBLAS_EXPORT hipblasStatus_t hipblasGemmBatchedEx(hipblasHandle_t    handle,
                                                     int                batchCount,
                                                     hipblasDatatype_t  computeType,
                                                     hipblasGemmAlgo_t  algo);
+
+HIPBLAS_EXPORT hipblasStatus_t hipblasGemmBatchedExWithFlags(hipblasHandle_t    handle,
+                                                             hipblasOperation_t transA,
+                                                             hipblasOperation_t transB,
+                                                             int                m,
+                                                             int                n,
+                                                             int                k,
+                                                             const void*        alpha,
+                                                             const void*        A[],
+                                                             hipblasDatatype_t  aType,
+                                                             int                lda,
+                                                             const void*        B[],
+                                                             hipblasDatatype_t  bType,
+                                                             int                ldb,
+                                                             const void*        beta,
+                                                             void*              C[],
+                                                             hipblasDatatype_t  cType,
+                                                             int                ldc,
+                                                             int                batchCount,
+                                                             hipblasDatatype_t  computeType,
+                                                             hipblasGemmAlgo_t  algo,
+                                                             int32_t            solution_index,
+                                                             hipblasGemmFlags_t flags);
 
 /*! \brief BLAS EX API
 
@@ -18596,6 +18651,32 @@ HIPBLAS_EXPORT hipblasStatus_t hipblasGemmStridedBatchedEx(hipblasHandle_t    ha
                                                            int                batchCount,
                                                            hipblasDatatype_t  computeType,
                                                            hipblasGemmAlgo_t  algo);
+
+HIPBLAS_EXPORT hipblasStatus_t hipblasGemmStridedBatchedExWithFlags(hipblasHandle_t    handle,
+                                                                    hipblasOperation_t transA,
+                                                                    hipblasOperation_t transB,
+                                                                    int                m,
+                                                                    int                n,
+                                                                    int                k,
+                                                                    const void*        alpha,
+                                                                    const void*        A,
+                                                                    hipblasDatatype_t  aType,
+                                                                    int                lda,
+                                                                    hipblasStride      strideA,
+                                                                    const void*        B,
+                                                                    hipblasDatatype_t  bType,
+                                                                    int                ldb,
+                                                                    hipblasStride      strideB,
+                                                                    const void*        beta,
+                                                                    void*              C,
+                                                                    hipblasDatatype_t  cType,
+                                                                    int                ldc,
+                                                                    hipblasStride      strideC,
+                                                                    int                batchCount,
+                                                                    hipblasDatatype_t  computeType,
+                                                                    hipblasGemmAlgo_t  algo,
+                                                                    int32_t            solution_index,
+                                                                    hipblasGemmFlags_t flags);
 
 /*! BLAS EX API
 

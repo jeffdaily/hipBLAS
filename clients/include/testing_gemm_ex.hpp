@@ -48,8 +48,6 @@ inline hipblasStatus_t testing_gemm_ex_template(const Arguments& arg)
     auto hipblasGemmExFn = FORTRAN ? hipblasGemmExFortran : hipblasGemmEx;
 
     hipblasGemmAlgo_t algo           = HIPBLAS_GEMM_DEFAULT;
-    uint32_t          solution_index = 0;
-    uint32_t          flags          = 0;
     size_t*           workspace_size = 0;
     void*             workspace      = 0;
 
